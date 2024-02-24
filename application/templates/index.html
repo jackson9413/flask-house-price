@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div>
+<div class="container">
     <h1>Data Description</h1>
     <p>The data is from <a href="https://www.kaggle.com/datasets/harlfoxem/housesalesprediction/data?select=kc_house_data.csv">Kaggle House Sales in King County, USA</a></p>
     <p>This dataset contains house sale prices for King County, which includes Seattle. It includes homes sold between May 2014 and May 2015.</p>
@@ -8,42 +8,23 @@
     <p>Here, we only use <b>bedrooms, bathrooms, sqft_living, sqft_above, sqft_basement</b> to predict house price.</p>
 </div>
 
-<div class="col-xs-10 col-sm-6 col-md-6">
-    <div class="card card-style mb-2">
-        <div class="card-body">
-            <div class="chart-container" style="position: relative;">
-                <canvas id="price_sqft_living"></canvas>
-            </div>
-        </div>
-    </div>
+<div class="container">
+    <h2>price ~ sqft_living</h2>
+    <div id="price_sqft_living"></div>
 </div>
 
-<div class="col-xs-10 col-sm-6 col-md-6">
-    <div class="card card-style mb-2">
-        <div class="card-body">
-            <div class="chart-container" style="position: relative;">
-                <canvas id="correlation"></canvas>
-            </div>
-        </div>
-    </div>
+<div class="container">
+    <h2>correlation of price and other features</h2>
+    <div id="correlation"></div>
 </div>
 
-<div class="col-xs-10 col-sm-6 col-md-6">
-    <div class="card card-style mb-2">
-        <div class="card-body">
-            <div class="chart-container" style="position: relative;">
-                <canvas id="price_num_bed"></canvas>
-            </div>
-        </div>
-    </div>
+<div class="container">
+    <h2>price ~ number of bedrooms</h2>
+    <div id="price_num_bed"></div>
 </div>
 
-<!-- Include JavaScript code to generate charts -->
-{% block javascript %}
 <script>
-    // convert the json figure to a javascript object and show the figure using plotly
     var graphs = {{graphJSON | safe}};
-    console.log(graphs);
     Plotly.plot('price_sqft_living',graphs,{});
 
     var graphs2 = {{graphJSON2 | safe}};
@@ -52,9 +33,8 @@
     var graphs3 = {{graphJSON3 | safe}};
     Plotly.plot('price_num_bed',graphs3,{});
 
-    //price_sqft_living.render();
-    //correlation.render();  
-    //price_num_bed.render();    
+    price_sqft_living.render();
+    correlation.render();  
+    price_num_bed.render();    
 </script>
-{% endblock %}
 {% endblock %}

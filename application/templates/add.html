@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="col-xs-10 col-sm-6 col-md-6 ml-auto mr-auto">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <form action="" method="POST">
+                {{ form.csrf_token() }}
+                <fieldset class="form-group">
+                    <legend class="mb-4">House Information</legend>
+                    <div class="form-group">
+                        {{ form.num_bedrooms.label(class="form-control-label") }}
+                        {% if form.num_bedrooms.errors %}
+                        {{ form.num_bedrooms(class="form-control form-control-sm is-invalid") }}
+                        {% for error in form.num_bedrooms.errors %}
+                        <div class="invalid-feedback">
+                            <span>{{error}}</span>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        {{ form.num_bedrooms(class="form-control form-control-sm") }}
+                        {% endif %}
+                    </div>
+            
+                    <div class="form-group">
+                        {{ form.num_bathrooms.label(class = "form-control-label") }}
+                        {{ form.num_bathrooms(class = "form-control form-control-sm") }}
+                    </div>
+            
+                    <div class="form-group">
+                        {{ form.sqft_living.label(class = "form-control-label") }}
+                        {{ form.sqft_living(class = "form-control form-control-sm") }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.sqft_above.label(class = "form-control-label") }}
+                        {{ form.sqft_above(class = "form-control form-control-sm") }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.sqft_basement.label(class = "form-control-label") }}
+                        {{ form.sqft_basement(class = "form-control form-control-sm") }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.price.label(class = "form-control-label") }}
+                        {{ form.price(class = "form-control form-control-sm") }}
+                    </div>
+            
+                    <div class="form-group border-bottom pb-3">
+                        {{ form.submit(class="btn btn-outline-info")}}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}
