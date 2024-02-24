@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container">
+    <h1>Data Description</h1>
+    <p>The data is from <a href="https://www.kaggle.com/datasets/harlfoxem/housesalesprediction/data?select=kc_house_data.csv">Kaggle House Sales in King County, USA</a></p>
+    <p>This dataset contains house sale prices for King County, which includes Seattle. It includes homes sold between May 2014 and May 2015.</p>
+    <p>It's a great dataset for evaluating simple regression models.</p>
+    <p>Here, we only use <b>bedrooms, bathrooms, sqft_living, sqft_above, sqft_basement</b> to predict house price.</p>
+</div>
+
+<div class="container">
+    <h2>price ~ sqft_living</h2>
+    <div id="price_sqft_living"></div>
+</div>
+
+<div class="container">
+    <h2>correlation of price and other features</h2>
+    <div id="correlation"></div>
+</div>
+
+<div class="container">
+    <h2>price ~ number of bedrooms</h2>
+    <div id="price_num_bed"></div>
+</div>
+
+<script>
+    var graphs = {{graphJSON | safe}};
+    Plotly.plot('price_sqft_living',graphs,{});
+
+    var graphs2 = {{graphJSON2 | safe}};
+    Plotly.plot('correlation',graphs2,{});
+    
+    var graphs3 = {{graphJSON3 | safe}};
+    Plotly.plot('price_num_bed',graphs3,{});
+
+    price_sqft_living.render();
+    correlation.render();  
+    price_num_bed.render();    
+</script>
+{% endblock %}

@@ -9,9 +9,14 @@ from flask import render_template, flash, redirect, url_for, get_flashed_message
 from application.form import UserInputForm
 from application.models import House
 
-
 @app.route('/')
 def index():
+    entries = House.query.order_by(House.date.desc()).all()
+    return render_template("index.html", title = 'index', entries = entries)
+
+
+@app.route('/dashboard')
+def dashboard():
     # Load the data
     df = pd.read_csv(r'kc_house_data.csv')
     
@@ -34,7 +39,7 @@ def index():
     # convert the figure to a json object by using the utils.PlotlyJSONEncoder
     graphJSON3 = json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)
     
-    return render_template('index.html', graphJSON=graphJSON, graphJSON2=graphJSON2, graphJSON3=graphJSON3)
+    return render_template('dashboard.html', graphJSON=graphJSON, graphJSON2=graphJSON2, graphJSON3=graphJSON3)
 
 @app.route('/layout')
 def layout():
@@ -55,3 +60,11 @@ def add():
         flash("Successful entry", "success")
         return redirect(url_for('index'))
     return render_template('add.html', title = 'add', form=form)
+
+@app.route('/delete/<int:entry_id>')
+def delete(entry_id):
+    entry = House.query.get_or_404(entry_id)
+    db.session.delete(entry)
+    db.session.commit()
+    flash("Entry deleted", "success")
+    return redirect(url_for('index'))
