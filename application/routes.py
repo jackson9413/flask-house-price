@@ -34,3 +34,6 @@ def index():
     
     return render_template('index.html', graphJSON=graphJSON, graphJSON2=graphJSON2, graphJSON3=graphJSON3)
 
+@app.route('/layout')
+def layout():
+    return render_template('layout.html')
