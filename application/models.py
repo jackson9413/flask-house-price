@@ -10,6 +10,7 @@ class House(db.Model):
     sqft_above = db.Column(db.Integer, nullable=False)
     sqft_basement = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    pred_price = db.Column(db.Integer, nullable=False, default=0)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
     def __str__(self):

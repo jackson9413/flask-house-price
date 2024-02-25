@@ -4,6 +4,7 @@ import plotly.express as px
 from plotly import utils
 import plotly 
 import json
+import pickle
 from application import app, db
 from flask import render_template, flash, redirect, url_for, get_flashed_messages
 from application.form import UserInputForm
@@ -68,3 +69,25 @@ def delete(entry_id):
     db.session.commit()
     flash("Entry deleted", "success")
     return redirect(url_for('index'))
+
+@app.route('/predict/<int:entry_id>', methods=['GET', 'POST'])
+def predict(entry_id):
+    # if click on the predict button then make a prediction    
+    entry = House.query.get_or_404(entry_id)
+    num_bedrooms = entry.num_bedrooms
+    num_bathrooms = entry.num_bathrooms
+    sqft_living = entry.sqft_living
+    sqft_above = entry.sqft_above
+    sqft_basement = entry.sqft_basement
+    
+    # load the pkl model file
+    model = pickle.load(open('lm.pkl', 'rb'))
+    
+    # make a prediction
+    pred_price = model.predict([[num_bedrooms, num_bathrooms, sqft_living, sqft_above, sqft_basement]])[0]
+    
+    entry.pred_price = pred_price
+    db.session.commit()
+    flash("Prediction made", "success")
+    return redirect(url_for('index'), entry_id=entry.id, pred_price=entry.pred_price)
+    
