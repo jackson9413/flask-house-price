@@ -86,8 +86,8 @@ def predict(entry_id):
     # make a prediction
     pred_price = model.predict([[num_bedrooms, num_bathrooms, sqft_living, sqft_above, sqft_basement]])[0]
     
-    entry.pred_price = pred_price
+    entry.pred_price = round(pred_price, 0)
     db.session.commit()
     flash("Prediction made", "success")
-    return redirect(url_for('index'), entry_id=entry.id, pred_price=entry.pred_price)
+    return redirect(url_for('index'))
     

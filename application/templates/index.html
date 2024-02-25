@@ -32,7 +32,7 @@
                             <td>{{ entry.price }}</td>
                             <td>{{ entry.pred_price }}</td>
                             <!-- if predict button is clicked then show predicted price else show 'Predict'-->
-                            <td><a href="{{url_for('predict', entry_id = entry.id)}}" class="btn btn-outline-primary btn-sm">Predict</a></td>
+                            <td><a href="{{url_for('predict', entry_id = entry.id)}}" class="btn btn-outline-danger btn-sm">Predict</a></td>
                             <td><a href="{{url_for('delete', entry_id = entry.id)}}" class="btn btn-outline-danger btn-sm">Delete</a></td>
                         </tr>
                 {% endfor %}
